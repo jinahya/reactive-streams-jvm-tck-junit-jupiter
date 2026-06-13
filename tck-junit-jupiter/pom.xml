@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>io.github.jinahya</groupId>
+    <artifactId>reactive-streams-jvm-tck-junit-jupiter</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>reactive-streams-tck-junit-jupiter</artifactId>
+  <packaging>jar</packaging>
+
+  <name>${project.artifactId}</name>
+  <description>JUnit Jupiter port of the Reactive Streams TCK (verifies Publisher/Subscriber/Processor implementations against the spec)</description>
+
+  <dependencies>
+    <!-- The spec API: Publisher / Subscriber / Subscription / Processor -->
+    <dependency>
+      <groupId>org.reactivestreams</groupId>
+      <artifactId>reactive-streams</artifactId>
+    </dependency>
+    <!--
+      The upstream TCK jar is consumed for:
+        - org.reactivestreams.tck.flow.support.{PublisherVerificationRules,
+                                                SubscriberWhiteboxVerificationRules,
+                                                SubscriberBlackboxVerificationRules}
+        - org.reactivestreams.tck.flow.support.{HelperPublisher, InfiniteHelperPublisher,
+                                                NonFatal, Optional, Function, TestException,
+                                                SubscriberBufferOverflowException}
+      TestNG is excluded at the BOM level. The upstream verification classes (which depend
+      on TestNG) are present in the jar but never loaded by our code; we provide our own
+      Jupiter-based replacements under org.reactivestreams.tck.junit.jupiter.
+    -->
+    <dependency>
+      <groupId>org.reactivestreams</groupId>
+      <artifactId>reactive-streams-tck</artifactId>
+    </dependency>
+    <!--
+      HelperPublisher / InfiniteHelperPublisher in the upstream jar extend
+      org.reactivestreams.example.unicast.AsyncIterablePublisher. Upstream declares
+      reactive-streams-examples with runtime scope only, so consumers that touch the
+      Helper publishers (we do, in WithHelperPublisher) need it on compile.
+    -->
+    <dependency>
+      <groupId>org.reactivestreams</groupId>
+      <artifactId>reactive-streams-examples</artifactId>
+      <version>${version.org.reactivestreams}</version>
+    </dependency>
+    <!--
+      Jupiter API: @Test, Assertions, Assumptions, @TestInstance, etc.
+      Scope is provided: consumers of this artifact already have JUnit Jupiter on their
+      test classpath, and we don't want to dictate their Jupiter version transitively
+      (the inherited dependencyConvergence enforcer in jinahya-parent would penalize
+      version mismatches). Pulls in opentest4j (TestAbortedException) transitively
+      under the same scope.
+    -->
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+    <!-- Test scope: run the Jupiter engine against our own example verification subclasses -->
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-engine</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+</project>

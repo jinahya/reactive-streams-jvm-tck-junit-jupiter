@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>io.github.jinahya</groupId>
+    <artifactId>reactive-streams-jvm-tck-junit-jupiter</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>reactive-streams-tck-flow-junit-jupiter</artifactId>
+  <packaging>jar</packaging>
+
+  <name>${project.artifactId}</name>
+  <description>JUnit Jupiter port of the Reactive Streams TCK for java.util.concurrent.Flow</description>
+
+  <dependencies>
+    <!-- Sibling: the Jupiter TCK base classes for Reactive Streams Publisher/Subscriber/Processor -->
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>reactive-streams-tck-junit-jupiter</artifactId>
+    </dependency>
+    <!-- FlowAdapters live in the reactive-streams jar's Java 9 source set, which is already on the classpath via the sibling -->
+
+    <!--
+      Jupiter API at provided scope, same rationale as the sibling module:
+      our Flow variants subclass classes that carry Jupiter annotations, so the
+      compiler needs the API visible. We don't propagate it transitively.
+    -->
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+    <!-- Test scope -->
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-engine</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+</project>
