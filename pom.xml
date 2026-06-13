@@ -30,8 +30,8 @@
   </licenses>
 
   <modules>
-    <module>reactive-streams-tck-junit-jupiter</module>
-    <module>reactive-streams-tck-flow-junit-jupiter</module>
+    <module>tck-junit-jupiter</module>
+    <module>tck-flow-junit-jupiter</module>
   </modules>
 
   <scm>
@@ -87,12 +87,12 @@
       <!-- Sibling modules -->
       <dependency>
         <groupId>${project.groupId}</groupId>
-        <artifactId>reactive-streams-tck-junit-jupiter</artifactId>
+        <artifactId>tck-junit-jupiter</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
         <groupId>${project.groupId}</groupId>
-        <artifactId>reactive-streams-tck-flow-junit-jupiter</artifactId>
+        <artifactId>tck-flow-junit-jupiter</artifactId>
         <version>${project.version}</version>
       </dependency>
     </dependencies>

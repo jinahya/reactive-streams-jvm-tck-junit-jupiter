@@ -14,21 +14,21 @@ The companion analysis document at the *root of the upstream working copy* (`rea
 
 | Module dir | artifactId | Mirrors upstream |
 |---|---|---|
-| `reactive-streams-tck-junit-jupiter/` | `reactive-streams-tck-junit-jupiter` | `org.reactivestreams:reactive-streams-tck` |
-| `reactive-streams-tck-flow-junit-jupiter/` | `reactive-streams-tck-flow-junit-jupiter` | `org.reactivestreams:reactive-streams-tck-flow` |
+| `tck-junit-jupiter/` | `tck-junit-jupiter` | `org.reactivestreams:reactive-streams-tck` |
+| `tck-flow-junit-jupiter/` | `tck-flow-junit-jupiter` | `org.reactivestreams:reactive-streams-tck-flow` |
 
 Parent: `io.github.jinahya:reactive-streams-jvm-tck-junit-jupiter` (packaging=pom), inheriting from `io.github.jinahya:jinahya-parent:1.0.8`.
 
-`reactive-streams-tck-flow-junit-jupiter` depends on `reactive-streams-tck-junit-jupiter` — the Flow variants are thin subclasses that wrap `Flow.Publisher` via `FlowAdapters` and delegate to the Reactive Streams TCK verification classes.
+`tck-flow-junit-jupiter` depends on `tck-junit-jupiter` — the Flow variants are thin subclasses that wrap `Flow.Publisher` via `FlowAdapters` and delegate to the Reactive Streams TCK verification classes.
 
 ## Build commands
 
 ```bash
 mvn install                                      # build + install both modules
-mvn -pl reactive-streams-tck-junit-jupiter install                # one module
-mvn -pl reactive-streams-tck-junit-jupiter test                   # run that module's tests
-mvn -pl reactive-streams-tck-junit-jupiter -Dtest=ClassName test  # single Jupiter test class
-mvn -pl reactive-streams-tck-junit-jupiter -Dtest='ClassName#methodName' test
+mvn -pl tck-junit-jupiter install                # one module
+mvn -pl tck-junit-jupiter test                   # run that module's tests
+mvn -pl tck-junit-jupiter -Dtest=ClassName test  # single Jupiter test class
+mvn -pl tck-junit-jupiter -Dtest='ClassName#methodName' test
 ```
 
 The parent pom is `pom.xml` at the repo root. Maven Surefire 3.5.6+ discovers Jupiter tests automatically — no `<provider>` config required.
@@ -59,7 +59,7 @@ These have zero TestNG references and are copied verbatim from upstream `reactiv
 - `org.reactivestreams.tck.junit.jupiter.SubscriberBlackboxVerification`
 - `org.reactivestreams.tck.junit.jupiter.IdentityProcessorVerification`
 - `org.reactivestreams.tck.junit.jupiter.WithHelperPublisher` (forked because it references the upstream `TestEnvironment`)
-- The four `reactive-streams-tck-flow-junit-jupiter` variants (thin adapters over our Jupiter base classes)
+- The four `tck-flow-junit-jupiter` variants (thin adapters over our Jupiter base classes)
 
 **Split-package caveat:** if a consumer also depends on `org.reactivestreams:reactive-streams-tck:1.0.4` (e.g. for cross-validation against TestNG), the `org.reactivestreams.tck.flow.support.*` package is split across two jars. Plain classpath usage works fine (one class definition wins; both are byte-equivalent at 1.0.4). JPMS/module path would error, but this project does not declare a `module-info.java`, so JPMS is opt-in.
 
@@ -87,8 +87,8 @@ Sketch: a test class that extends both `org.reactivestreams.tck.PublisherVerific
 ## Source layout and package naming
 
 ```
-reactive-streams-tck-junit-jupiter/src/main/java/org/reactivestreams/tck/junit/jupiter/
-reactive-streams-tck-flow-junit-jupiter/src/main/java/org/reactivestreams/tck/flow/junit/jupiter/
+tck-junit-jupiter/src/main/java/org/reactivestreams/tck/junit/jupiter/
+tck-flow-junit-jupiter/src/main/java/org/reactivestreams/tck/flow/junit/jupiter/
 ```
 
 Packages are deliberately distinct from upstream (`org.reactivestreams.tck.junit.jupiter` vs upstream's `org.reactivestreams.tck`) so a consumer can import both TCKs simultaneously for cross-validation without name clashes.

@@ -10,10 +10,10 @@ The jar is self-contained: we mechanically ported the 6 TestNG-coupled upstream 
 
 | Module dir | artifactId | Mirrors upstream |
 |---|---|---|
-| `reactive-streams-tck-junit-jupiter/` | `reactive-streams-tck-junit-jupiter` | `org.reactivestreams:reactive-streams-tck` |
-| `reactive-streams-tck-flow-junit-jupiter/` | `reactive-streams-tck-flow-junit-jupiter` | `org.reactivestreams:reactive-streams-tck-flow` |
+| `tck-junit-jupiter/` | `tck-junit-jupiter` | `org.reactivestreams:reactive-streams-tck` |
+| `tck-flow-junit-jupiter/` | `tck-flow-junit-jupiter` | `org.reactivestreams:reactive-streams-tck-flow` |
 
-`reactive-streams-tck-flow-junit-jupiter` is a thin subclass layer over `reactive-streams-tck-junit-jupiter` that adapts `java.util.concurrent.Flow` types via `FlowAdapters`.
+`tck-flow-junit-jupiter` is a thin subclass layer over `tck-junit-jupiter` that adapts `java.util.concurrent.Flow` types via `FlowAdapters`.
 
 ## Requirements
 
@@ -27,7 +27,7 @@ For Reactive Streams `org.reactivestreams.Publisher` / `Subscriber` / `Processor
 ```xml
 <dependency>
   <groupId>io.github.jinahya</groupId>
-  <artifactId>reactive-streams-tck-junit-jupiter</artifactId>
+  <artifactId>tck-junit-jupiter</artifactId>
   <version>0.0.2-SNAPSHOT</version>
   <scope>test</scope>
 </dependency>
@@ -38,7 +38,7 @@ For `java.util.concurrent.Flow` implementations (transitively pulls in the above
 ```xml
 <dependency>
   <groupId>io.github.jinahya</groupId>
-  <artifactId>reactive-streams-tck-flow-junit-jupiter</artifactId>
+  <artifactId>tck-flow-junit-jupiter</artifactId>
   <version>0.0.2-SNAPSHOT</version>
   <scope>test</scope>
 </dependency>
@@ -90,9 +90,9 @@ Why `provided` on our side? You already have these — `reactive-streams` becaus
 ## Gradle coordinates
 
 ```groovy
-testImplementation 'io.github.jinahya:reactive-streams-tck-junit-jupiter:0.0.2-SNAPSHOT'
+testImplementation 'io.github.jinahya:tck-junit-jupiter:0.0.2-SNAPSHOT'
 // or, for Flow:
-testImplementation 'io.github.jinahya:reactive-streams-tck-flow-junit-jupiter:0.0.2-SNAPSHOT'
+testImplementation 'io.github.jinahya:tck-flow-junit-jupiter:0.0.2-SNAPSHOT'
 
 // The spec API — library authors usually declare this at implementation/api scope already.
 testImplementation 'org.reactivestreams:reactive-streams:1.0.4'
@@ -280,8 +280,8 @@ The verification class packages (`org.reactivestreams.tck.junit.jupiter`) are de
 
 ```bash
 mvn install                                      # build + install both modules
-mvn -pl reactive-streams-tck-junit-jupiter install                # one module
-mvn -pl reactive-streams-tck-junit-jupiter test                   # run that module's tests
+mvn -pl tck-junit-jupiter install                # one module
+mvn -pl tck-junit-jupiter test                   # run that module's tests
 ```
 
 ## License
