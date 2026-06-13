@@ -4,16 +4,16 @@ A JUnit Jupiter port of the [Reactive Streams JVM TCK](https://github.com/reacti
 
 The upstream TCK is TestNG-based. This project provides equivalent abstract `*Verification` base classes annotated for JUnit Jupiter, so projects on a Jupiter-only test stack can verify their `Publisher` / `Subscriber` / `Processor` implementations against the Reactive Streams spec without dragging TestNG into the build.
 
-It is *not* a fork of the entire upstream TCK. The TestNG-free pieces (rules interfaces, helper publishers, support utilities) are consumed directly from the upstream `org.reactivestreams:reactive-streams-tck:1.0.4` jar with TestNG excluded transitively; only the TestNG-coupled classes are reimplemented locally. Spec semantics, method names (`required_specNNN_…`, `optional_specNNN_…`, `untested_specNNN_…`), and rule-to-test mappings are preserved verbatim.
+The jar is self-contained: we mechanically ported the 6 TestNG-coupled upstream classes to JUnit Jupiter (`TestEnvironment`, `WithHelperPublisher`, and the four `*Verification` classes), and we inlined the 10 TestNG-free upstream support classes (rules interfaces, helper publishers, support utilities) plus `AsyncIterablePublisher` from `reactive-streams-examples`, all preserved at their original packages. There is no transitive dependency on `reactive-streams-tck` or `reactive-streams-examples`. Spec semantics, method names (`required_specNNN_…`, `optional_specNNN_…`, `untested_specNNN_…`), and rule-to-test mappings are preserved verbatim.
 
 ## Modules
 
 | Module dir | artifactId | Mirrors upstream |
 |---|---|---|
-| `tck-junit-jupiter/` | `reactive-streams-tck-junit-jupiter` | `org.reactivestreams:reactive-streams-tck` |
-| `tck-flow-junit-jupiter/` | `reactive-streams-tck-flow-junit-jupiter` | `org.reactivestreams:reactive-streams-tck-flow` |
+| `reactive-streams-tck-junit-jupiter/` | `reactive-streams-tck-junit-jupiter` | `org.reactivestreams:reactive-streams-tck` |
+| `reactive-streams-tck-flow-junit-jupiter/` | `reactive-streams-tck-flow-junit-jupiter` | `org.reactivestreams:reactive-streams-tck-flow` |
 
-`tck-flow-junit-jupiter` is a thin subclass layer over `tck-junit-jupiter` that adapts `java.util.concurrent.Flow` types via `FlowAdapters`.
+`reactive-streams-tck-flow-junit-jupiter` is a thin subclass layer over `reactive-streams-tck-junit-jupiter` that adapts `java.util.concurrent.Flow` types via `FlowAdapters`.
 
 ## Requirements
 
@@ -28,7 +28,7 @@ For Reactive Streams `org.reactivestreams.Publisher` / `Subscriber` / `Processor
 <dependency>
   <groupId>io.github.jinahya</groupId>
   <artifactId>reactive-streams-tck-junit-jupiter</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.0.2-SNAPSHOT</version>
   <scope>test</scope>
 </dependency>
 ```
@@ -39,12 +39,12 @@ For `java.util.concurrent.Flow` implementations (transitively pulls in the above
 <dependency>
   <groupId>io.github.jinahya</groupId>
   <artifactId>reactive-streams-tck-flow-junit-jupiter</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.0.2-SNAPSHOT</version>
   <scope>test</scope>
 </dependency>
 ```
 
-`junit-jupiter-api` is a `provided` dependency on our side. Your project already has Jupiter on its test classpath, so we don't propagate a version transitively — you control your own Jupiter version (typically via `junit-bom`):
+`reactive-streams` and `junit-jupiter-api` are `provided` on our side — neither propagates transitively. You're expected to declare them yourself, in the scope that fits your project:
 
 ```xml
 <dependencyManagement>
@@ -60,6 +60,18 @@ For `java.util.concurrent.Flow` implementations (transitively pulls in the above
 </dependencyManagement>
 
 <dependencies>
+  <!--
+    The spec API. Library authors implementing a Publisher/Subscriber/Processor
+    already have this declared (usually at compile). For test-only consumers,
+    declare it at test scope.
+  -->
+  <dependency>
+    <groupId>org.reactivestreams</groupId>
+    <artifactId>reactive-streams</artifactId>
+    <version>1.0.4</version>
+  </dependency>
+
+  <!-- Jupiter API + engine. -->
   <dependency>
     <groupId>org.junit.jupiter</groupId>
     <artifactId>junit-jupiter-api</artifactId>
@@ -73,12 +85,17 @@ For `java.util.concurrent.Flow` implementations (transitively pulls in the above
 </dependencies>
 ```
 
+Why `provided` on our side? You already have these — `reactive-streams` because you're testing a `Publisher`, Jupiter because that's your test framework. Propagating our versions transitively would only fight your own pinning (and break the inherited `dependencyConvergence` enforcer in our parent pom if versions mismatched). Letting you declare them keeps you in control.
+
 ## Gradle coordinates
 
 ```groovy
-testImplementation 'io.github.jinahya:reactive-streams-tck-junit-jupiter:0.0.1-SNAPSHOT'
+testImplementation 'io.github.jinahya:reactive-streams-tck-junit-jupiter:0.0.2-SNAPSHOT'
 // or, for Flow:
-testImplementation 'io.github.jinahya:reactive-streams-tck-flow-junit-jupiter:0.0.1-SNAPSHOT'
+testImplementation 'io.github.jinahya:reactive-streams-tck-flow-junit-jupiter:0.0.2-SNAPSHOT'
+
+// The spec API — library authors usually declare this at implementation/api scope already.
+testImplementation 'org.reactivestreams:reactive-streams:1.0.4'
 
 testImplementation platform('org.junit:junit-bom:6.1.0')
 testImplementation 'org.junit.jupiter:junit-jupiter-api'
@@ -253,16 +270,18 @@ The test methods preserve the upstream `required_specNNN_*` / `optional_specNNN_
 | Package | `org.reactivestreams.tck` | `org.reactivestreams.tck.junit.jupiter` |
 | Spec rule coverage | All upstream rules | Identical — every `*VerificationRules` interface method has the same body |
 
-The upstream rules interfaces (`PublisherVerificationRules`, `SubscriberWhiteboxVerificationRules`, `SubscriberBlackboxVerificationRules`) are consumed directly from the upstream jar — our verification classes `implements` them. If upstream ever adds a new rule method, our build breaks until we add a test body. This is the static drift detector.
+The rules interfaces (`PublisherVerificationRules`, `SubscriberWhiteboxVerificationRules`, `SubscriberBlackboxVerificationRules`) are inlined into our jar at their original upstream package (`org.reactivestreams.tck.flow.support`) — same package, same classes, same method contracts. Our verification classes `implements` them. The same is true for the helper publishers (`HelperPublisher`, `InfiniteHelperPublisher`), the support utilities (`Function`, `Optional`, `NonFatal`, `TestException`, `SubscriberBufferOverflowException`), and `AsyncIterablePublisher` (kept at `org.reactivestreams.example.unicast`).
 
-The packages are deliberately distinct from upstream so a consumer can depend on both TCKs simultaneously (for example, to cross-validate that the Jupiter port matches TestNG behaviour rule-by-rule) without import conflicts.
+The verification class packages (`org.reactivestreams.tck.junit.jupiter`) are deliberately distinct from upstream's (`org.reactivestreams.tck`) so a consumer can depend on both TCKs simultaneously — for example to cross-validate that the Jupiter port matches TestNG behaviour rule-by-rule — without import conflicts.
+
+> ⚠️ **Note**: if a consumer also explicitly depends on `org.reactivestreams:reactive-streams-tck:1.0.4` (e.g. for cross-validation), the `org.reactivestreams.tck.flow.support.*` package becomes split across two jars. On the classpath this works (one definition wins, both are byte-equivalent). Under JPMS / module path, it would error — but this project does not declare a `module-info.java`, so JPMS is opt-in.
 
 ## Building from source
 
 ```bash
 mvn install                                      # build + install both modules
-mvn -pl tck-junit-jupiter install                # one module
-mvn -pl tck-junit-jupiter test                   # run that module's tests
+mvn -pl reactive-streams-tck-junit-jupiter install                # one module
+mvn -pl reactive-streams-tck-junit-jupiter test                   # run that module's tests
 ```
 
 ## License

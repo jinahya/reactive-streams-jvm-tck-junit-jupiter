@@ -30,8 +30,8 @@
   </licenses>
 
   <modules>
-    <module>tck-junit-jupiter</module>
-    <module>tck-flow-junit-jupiter</module>
+    <module>reactive-streams-tck-junit-jupiter</module>
+    <module>reactive-streams-tck-flow-junit-jupiter</module>
   </modules>
 
   <scm>
@@ -77,19 +77,13 @@
         <artifactId>reactive-streams</artifactId>
         <version>${version.org.reactivestreams}</version>
       </dependency>
-      <dependency>
-        <groupId>org.reactivestreams</groupId>
-        <artifactId>reactive-streams-tck</artifactId>
-        <version>${version.org.reactivestreams}</version>
-        <!-- We reuse the rules interfaces + TestNG-free support helpers from this jar. -->
-        <!-- TestNG itself is unwanted: our verification classes are Jupiter-based. -->
-        <exclusions>
-          <exclusion>
-            <groupId>org.testng</groupId>
-            <artifactId>testng</artifactId>
-          </exclusion>
-        </exclusions>
-      </dependency>
+      <!--
+        The TestNG-free pieces of upstream reactive-streams-tck (rules interfaces,
+        helper publishers, support utilities) and AsyncIterablePublisher from
+        reactive-streams-examples are inlined into our jar under their original
+        packages. No transitive dependency on upstream's reactive-streams-tck or
+        reactive-streams-examples is required.
+      -->
       <!-- Sibling modules -->
       <dependency>
         <groupId>${project.groupId}</groupId>

@@ -15,38 +15,23 @@
   <description>JUnit Jupiter port of the Reactive Streams TCK (verifies Publisher/Subscriber/Processor implementations against the spec)</description>
 
   <dependencies>
-    <!-- The spec API: Publisher / Subscriber / Subscription / Processor -->
+    <!--
+      The spec API: Publisher / Subscriber / Subscription / Processor.
+      Scope is provided: consumers of this TCK are by definition implementing or testing
+      one of these types, so they already have reactive-streams on their classpath.
+      Symmetric to junit-jupiter-api below: we don't dictate the version transitively.
+    -->
     <dependency>
       <groupId>org.reactivestreams</groupId>
       <artifactId>reactive-streams</artifactId>
+      <scope>provided</scope>
     </dependency>
     <!--
-      The upstream TCK jar is consumed for:
-        - org.reactivestreams.tck.flow.support.{PublisherVerificationRules,
-                                                SubscriberWhiteboxVerificationRules,
-                                                SubscriberBlackboxVerificationRules}
-        - org.reactivestreams.tck.flow.support.{HelperPublisher, InfiniteHelperPublisher,
-                                                NonFatal, Optional, Function, TestException,
-                                                SubscriberBufferOverflowException}
-      TestNG is excluded at the BOM level. The upstream verification classes (which depend
-      on TestNG) are present in the jar but never loaded by our code; we provide our own
-      Jupiter-based replacements under org.reactivestreams.tck.junit.jupiter.
+      The TestNG-free portion of the upstream TCK (rules interfaces, helper publishers,
+      support utilities) and AsyncIterablePublisher are inlined into this jar under
+      their original packages. No transitive dependency on reactive-streams-tck or
+      reactive-streams-examples is needed.
     -->
-    <dependency>
-      <groupId>org.reactivestreams</groupId>
-      <artifactId>reactive-streams-tck</artifactId>
-    </dependency>
-    <!--
-      HelperPublisher / InfiniteHelperPublisher in the upstream jar extend
-      org.reactivestreams.example.unicast.AsyncIterablePublisher. Upstream declares
-      reactive-streams-examples with runtime scope only, so consumers that touch the
-      Helper publishers (we do, in WithHelperPublisher) need it on compile.
-    -->
-    <dependency>
-      <groupId>org.reactivestreams</groupId>
-      <artifactId>reactive-streams-examples</artifactId>
-      <version>${version.org.reactivestreams}</version>
-    </dependency>
     <!--
       Jupiter API: @Test, Assertions, Assumptions, @TestInstance, etc.
       Scope is provided: consumers of this artifact already have JUnit Jupiter on their

@@ -20,7 +20,18 @@
       <groupId>${project.groupId}</groupId>
       <artifactId>reactive-streams-tck-junit-jupiter</artifactId>
     </dependency>
-    <!-- FlowAdapters live in the reactive-streams jar's Java 9 source set, which is already on the classpath via the sibling -->
+
+    <!--
+      The spec API + FlowAdapters (in the Java 9 source set). Scope is provided
+      because the sibling module declares reactive-streams at provided scope too
+      (provided does not propagate transitively), and consumers of this artifact
+      are by definition implementing a Flow type, so they already have it.
+    -->
+    <dependency>
+      <groupId>org.reactivestreams</groupId>
+      <artifactId>reactive-streams</artifactId>
+      <scope>provided</scope>
+    </dependency>
 
     <!--
       Jupiter API at provided scope, same rationale as the sibling module:
