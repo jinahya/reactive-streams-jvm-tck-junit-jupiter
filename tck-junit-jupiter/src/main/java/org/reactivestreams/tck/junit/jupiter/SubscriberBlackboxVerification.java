@@ -30,7 +30,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * specification rules, without any modifications to the tested implementation (also known as "Black Box" testing).
  *
  * This verification is NOT able to check many of the rules of the spec, and if you want more
- * verification of your implementation you'll have to implement {@code org.reactivestreams.tck.SubscriberWhiteboxVerification}
+ * verification of your implementation you'll have to implement {@code org.reactivestreams.tck.junit.jupiter.SubscriberWhiteboxVerification}
  * instead.
  *
  * @see org.reactivestreams.Subscriber

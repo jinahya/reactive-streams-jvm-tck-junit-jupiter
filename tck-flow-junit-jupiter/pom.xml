@@ -50,5 +50,14 @@
       <artifactId>junit-jupiter-engine</artifactId>
       <scope>test</scope>
     </dependency>
+    <!--
+      Test-scope only: upstream's example Publisher/Subscriber impls wrapped through
+      FlowAdapters to drive the Flow variants of our TCK. NOT propagated to consumers.
+    -->
+    <dependency>
+      <groupId>org.reactivestreams</groupId>
+      <artifactId>reactive-streams-examples</artifactId>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 </project>

@@ -215,7 +215,7 @@ public class TestEnvironment {
    * To check investigate asyncErrors more closely you can use {@code expectError} methods or collect the error directly
    * from the environment using {@code env.dropAsyncError()}.
    *
-   * To clear asyncErrors you can call {@link org.reactivestreams.tck.TestEnvironment#clearAsyncErrors()}
+   * To clear asyncErrors you can call {@link org.reactivestreams.tck.junit.jupiter.TestEnvironment#clearAsyncErrors()}
    */
   public void flop(String msg) {
     try {
@@ -235,7 +235,7 @@ public class TestEnvironment {
    * To check investigate asyncErrors more closely you can use {@code expectError} methods or collect the error directly
    * from the environment using {@code env.dropAsyncError()}.
    *
-   * To clear asyncErrors you can call {@link org.reactivestreams.tck.TestEnvironment#clearAsyncErrors()}
+   * To clear asyncErrors you can call {@link org.reactivestreams.tck.junit.jupiter.TestEnvironment#clearAsyncErrors()}
    */
   public void flop(Throwable thr, String msg) {
     try {
@@ -255,7 +255,7 @@ public class TestEnvironment {
    * To check investigate asyncErrors more closely you can use {@code expectError} methods or collect the error directly
    * from the environment using {@code env.dropAsyncError()}.
    *
-   * To clear asyncErrors you can call {@link org.reactivestreams.tck.TestEnvironment#clearAsyncErrors()}
+   * To clear asyncErrors you can call {@link org.reactivestreams.tck.junit.jupiter.TestEnvironment#clearAsyncErrors()}
    */
   public void flop(Throwable thr) {
     try {
@@ -269,13 +269,13 @@ public class TestEnvironment {
    * To flop means to "fail asynchronously", either by onErroring or by failing some TCK check triggered asynchronously.
    *
    * This method DOES fail the test right away (it tries to, by throwing an AssertionException),
-   * in such it is different from {@link org.reactivestreams.tck.TestEnvironment#flop} which only records the error.
+   * in such it is different from {@link org.reactivestreams.tck.junit.jupiter.TestEnvironment#flop} which only records the error.
    *
    * Use {@code env.verifyNoAsyncErrorsNoDelay()} at the end of your TCK tests to verify there no flops called during it's execution.
    * To check investigate asyncErrors more closely you can use {@code expectError} methods or collect the error directly
    * from the environment using {@code env.dropAsyncError()}.
    *
-   * To clear asyncErrors you can call {@link org.reactivestreams.tck.TestEnvironment#clearAsyncErrors()}
+   * To clear asyncErrors you can call {@link org.reactivestreams.tck.junit.jupiter.TestEnvironment#clearAsyncErrors()}
    */
   public <T> T flopAndFail(String msg) {
     try {
@@ -697,7 +697,7 @@ public class TestEnvironment {
   }
 
   /**
-   * Similar to {@link org.reactivestreams.tck.TestEnvironment.ManualSubscriberWithSubscriptionSupport}
+   * Similar to {@link org.reactivestreams.tck.junit.jupiter.TestEnvironment.ManualSubscriberWithSubscriptionSupport}
    * but does not accumulate values signalled via <code>onNext</code>, thus it can not be used to assert
    * values signalled to this subscriber. Instead it may be used to quickly drain a given publisher.
    */

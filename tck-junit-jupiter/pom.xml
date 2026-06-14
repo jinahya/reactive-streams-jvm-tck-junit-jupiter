@@ -52,5 +52,15 @@
       <artifactId>junit-jupiter-engine</artifactId>
       <scope>test</scope>
     </dependency>
+    <!--
+      Test-scope only: upstream's example Publisher/Subscriber impls (RangePublisher,
+      SyncSubscriber, AsyncSubscriber) used as known-good subjects to self-test this
+      module's verification classes. NOT propagated to consumers.
+    -->
+    <dependency>
+      <groupId>org.reactivestreams</groupId>
+      <artifactId>reactive-streams-examples</artifactId>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 </project>

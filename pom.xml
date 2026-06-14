@@ -83,7 +83,17 @@
         reactive-streams-examples are inlined into our jar under their original
         packages. No transitive dependency on upstream's reactive-streams-tck or
         reactive-streams-examples is required.
+
+        reactive-streams-examples is consumed at <scope>test</scope> only, where
+        RangePublisher / SyncSubscriber / AsyncSubscriber drive our own TCK self-test
+        modules — verifying the mechanical TestNG -> Jupiter port against known-good
+        upstream implementations.
       -->
+      <dependency>
+        <groupId>org.reactivestreams</groupId>
+        <artifactId>reactive-streams-examples</artifactId>
+        <version>${version.org.reactivestreams}</version>
+      </dependency>
       <!-- Sibling modules -->
       <dependency>
         <groupId>${project.groupId}</groupId>

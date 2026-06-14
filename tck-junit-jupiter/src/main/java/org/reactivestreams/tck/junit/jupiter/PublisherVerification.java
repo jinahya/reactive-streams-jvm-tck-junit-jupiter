@@ -262,7 +262,7 @@ public abstract class PublisherVerification<T> implements PublisherVerificationR
               private ConcurrentAccessBarrier concurrentAccessBarrier = new ConcurrentAccessBarrier();
 
               /**
-               * Concept wise very similar to a {@link org.reactivestreams.tck.TestEnvironment.Latch}, serves to protect
+               * Concept wise very similar to a {@link org.reactivestreams.tck.junit.jupiter.TestEnvironment.Latch}, serves to protect
                * a critical section from concurrent access, with the added benefit of Thread tracking and same-thread-access awareness.
                *
                * Since a <i>Synchronous</i> Publisher may choose to synchronously (using the same {@link Thread}) call

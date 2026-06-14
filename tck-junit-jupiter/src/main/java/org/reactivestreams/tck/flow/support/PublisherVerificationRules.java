@@ -10,21 +10,21 @@ package org.reactivestreams.tck.flow.support;
  */
 public interface PublisherVerificationRules {
   /**
-   * Validates that the override of {@link org.reactivestreams.tck.PublisherVerification#maxElementsFromPublisher()}
+   * Validates that the override of {@link org.reactivestreams.tck.junit.jupiter.PublisherVerification#maxElementsFromPublisher()}
    * returns a non-negative value.
    */
   void required_validate_maxElementsFromPublisher() throws Exception;
   /**
-   * Validates that the override of {@link org.reactivestreams.tck.PublisherVerification#boundedDepthOfOnNextAndRequestRecursion()}
+   * Validates that the override of {@link org.reactivestreams.tck.junit.jupiter.PublisherVerification#boundedDepthOfOnNextAndRequestRecursion()}
    * returns a positive value.
    */
   void required_validate_boundedDepthOfOnNextAndRequestRecursion() throws Exception;
   /**
    * Asks for a {@code Publisher} that should emit exactly one item and complete (both within a
-   * timeout specified by {@link org.reactivestreams.tck.TestEnvironment#defaultTimeoutMillis()})
+   * timeout specified by {@link org.reactivestreams.tck.junit.jupiter.TestEnvironment#defaultTimeoutMillis()})
    * in response to a request(1).
    * <p>
-   * The test is not executed if {@link org.reactivestreams.tck.PublisherVerification#maxElementsFromPublisher()} returns zero.
+   * The test is not executed if {@link org.reactivestreams.tck.junit.jupiter.PublisherVerification#maxElementsFromPublisher()} returns zero.
    * If this test fails, the following could be checked within the {@code Publisher} implementation:
    * <ul>
    * <li>the {@code Publisher.subscribe(Subscriber)} method has actual implementation,</li>
@@ -42,9 +42,9 @@ public interface PublisherVerificationRules {
   void required_createPublisher1MustProduceAStreamOfExactly1Element() throws Throwable;
   /**
    * Asks for a {@code Publisher} that should emit exactly three items and complete (all within a
-   * timeout specified by {@link org.reactivestreams.tck.TestEnvironment#defaultTimeoutMillis()}).
+   * timeout specified by {@link org.reactivestreams.tck.junit.jupiter.TestEnvironment#defaultTimeoutMillis()}).
    * <p>
-   * The test is not executed if {@link org.reactivestreams.tck.PublisherVerification#maxElementsFromPublisher()} is less than 3.
+   * The test is not executed if {@link org.reactivestreams.tck.junit.jupiter.PublisherVerification#maxElementsFromPublisher()} is less than 3.
    * <p>
    * The tests requests one-by-one and verifies each single response item arrives in time.
    * <p>
@@ -68,7 +68,7 @@ public interface PublisherVerificationRules {
    * <p>
    * <b>Verifies rule:</b> <a href='https://github.com/reactive-streams/reactive-streams-jvm#1.1'>1.1</a>
    * <p>
-   * The test is not executed if {@link org.reactivestreams.tck.PublisherVerification#maxElementsFromPublisher()} is less than 5.
+   * The test is not executed if {@link org.reactivestreams.tck.junit.jupiter.PublisherVerification#maxElementsFromPublisher()} is less than 5.
    * <p>
    * This test ensures that the {@code Publisher} implementation correctly responds to {@code request()} calls that in
    * total are less than the number of elements this {@code Publisher} could emit (thus the completion event won't be emitted).
@@ -88,7 +88,7 @@ public interface PublisherVerificationRules {
    * <p>
    * <b>Verifies rule:</b> <a href='https://github.com/reactive-streams/reactive-streams-jvm#1.2'>1.2</a>
    * <p>
-   * The test is not executed if {@link org.reactivestreams.tck.PublisherVerification#maxElementsFromPublisher()} is less than 3.
+   * The test is not executed if {@link org.reactivestreams.tck.junit.jupiter.PublisherVerification#maxElementsFromPublisher()} is less than 3.
    * <p>
    * This test ensures that the {@code Publisher} implementation can deal with larger requests than the number of items it can produce.
    * <p>
@@ -105,7 +105,7 @@ public interface PublisherVerificationRules {
    * <p>
    * <b>Verifies rule:</b> <a href='https://github.com/reactive-streams/reactive-streams-jvm#1.3'>1.3</a>
    * <p>
-   * The test is not executed if {@link org.reactivestreams.tck.PublisherVerification#maxElementsFromPublisher()} is less than 10.
+   * The test is not executed if {@link org.reactivestreams.tck.junit.jupiter.PublisherVerification#maxElementsFromPublisher()} is less than 10.
    * <p>
    * Note that this test is probabilistic, that is, may not capture any concurrent invocation in a {code Publisher} implementation.
    * Note also that this test is sensitive to cases when a {@code request()} call in {@code onSubscribe()} triggers an asynchronous
@@ -148,7 +148,7 @@ public interface PublisherVerificationRules {
    * <p>
    * <b>Verifies rule:</b> <a href='https://github.com/reactive-streams/reactive-streams-jvm#1.5'>1.5</a>
    * <p>
-   * The test is not executed if {@link org.reactivestreams.tck.PublisherVerification#maxElementsFromPublisher()} is less than 3.
+   * The test is not executed if {@link org.reactivestreams.tck.junit.jupiter.PublisherVerification#maxElementsFromPublisher()} is less than 3.
    * <p>
    * Note that the tests requests 1 after the items have been received and before expecting an {@code onComplete} signal.
    * <p>
@@ -186,7 +186,7 @@ public interface PublisherVerificationRules {
    * <p>
    * <b>Verifies rule:</b> <a href='https://github.com/reactive-streams/reactive-streams-jvm#1.7'>1.7</a>
    * <p>
-   * The test is not executed if {@link org.reactivestreams.tck.PublisherVerification#maxElementsFromPublisher()} is less than 1.
+   * The test is not executed if {@link org.reactivestreams.tck.junit.jupiter.PublisherVerification#maxElementsFromPublisher()} is less than 1.
    * <p>
    * The tests requests more items than the expected {@code Publisher} length upfront and some more items after its completion.
    * <p>
@@ -284,7 +284,7 @@ public interface PublisherVerificationRules {
    * <p>
    * <b>Verifies rule:</b> <a href='https://github.com/reactive-streams/reactive-streams-jvm#1.11'>1.11</a>
    * <p>
-   * The test is not executed if {@link org.reactivestreams.tck.PublisherVerification#maxElementsFromPublisher()} is less than 1.
+   * The test is not executed if {@link org.reactivestreams.tck.junit.jupiter.PublisherVerification#maxElementsFromPublisher()} is less than 1.
    * <p>
    * Note that this test ignores what signals the {@code Publisher} emits. Any exception thrown through non-regular
    * means will indicate a skipped test.
@@ -298,7 +298,7 @@ public interface PublisherVerificationRules {
    * and depends on valid implementation of rule <a href='https://github.com/reactive-streams/reactive-streams-jvm#1.5'>1.5</a>
    * in order to verify this.
    * <p>
-   * The test is not executed if {@link org.reactivestreams.tck.PublisherVerification#maxElementsFromPublisher()} is less than 1.
+   * The test is not executed if {@link org.reactivestreams.tck.junit.jupiter.PublisherVerification#maxElementsFromPublisher()} is less than 1.
    * <p>
    * Any exception thrown through non-regular means will indicate a skipped test.
    */
@@ -309,7 +309,7 @@ public interface PublisherVerificationRules {
    * <p>
    * <b>Verifies rule:</b> <a href='https://github.com/reactive-streams/reactive-streams-jvm#1.11'>1.11</a>
    * <p>
-   * The test is not executed if {@link org.reactivestreams.tck.PublisherVerification#maxElementsFromPublisher()} is less than 5.
+   * The test is not executed if {@link org.reactivestreams.tck.junit.jupiter.PublisherVerification#maxElementsFromPublisher()} is less than 5.
    * <p>
    * The request pattern for the first {@code Subscriber} is (1, 1, 2, 1); for the second is (2, 3) and for the third is (3, 1, 1).
    * <p>
@@ -334,7 +334,7 @@ public interface PublisherVerificationRules {
    * <p>
    * <b>Verifies rule:</b> <a href='https://github.com/reactive-streams/reactive-streams-jvm#1.11'>1.11</a>
    * <p>
-   * The test is not executed if {@link org.reactivestreams.tck.PublisherVerification#maxElementsFromPublisher()} is less than 3.
+   * The test is not executed if {@link org.reactivestreams.tck.junit.jupiter.PublisherVerification#maxElementsFromPublisher()} is less than 3.
    * <p>
    * Note that this test requires a {@code Publisher} that always emits the same signals to any {@code Subscriber}, regardless of
    * when they subscribe and how they request elements. I.e., a "live" {@code Publisher} emitting the current time would not pass this test.
@@ -357,7 +357,7 @@ public interface PublisherVerificationRules {
    * <p>
    * <b>Verifies rule:</b> <a href='https://github.com/reactive-streams/reactive-streams-jvm#1.11'>1.11</a>
    * <p>
-   * The test is not executed if {@link org.reactivestreams.tck.PublisherVerification#maxElementsFromPublisher()} is less than 3.
+   * The test is not executed if {@link org.reactivestreams.tck.junit.jupiter.PublisherVerification#maxElementsFromPublisher()} is less than 3.
    * <p>
    * Note that this test requires a {@code Publisher} that always emits the same signals to any {@code Subscriber}, regardless of
    * when they subscribe and how they request elements. I.e., a "live" {@code Publisher} emitting the current time would not pass this test.
@@ -380,7 +380,7 @@ public interface PublisherVerificationRules {
    * <p>
    * <b>Verifies rule:</b> <a href='https://github.com/reactive-streams/reactive-streams-jvm#3.2'>3.2</a>
    * <p>
-   * The test is not executed if {@link org.reactivestreams.tck.PublisherVerification#maxElementsFromPublisher()} is less than 6.
+   * The test is not executed if {@link org.reactivestreams.tck.junit.jupiter.PublisherVerification#maxElementsFromPublisher()} is less than 6.
    * <p>
    * The request pattern is 3 x 1 from within {@code onSubscribe} and one from within each {@code onNext} invocation.
    * <p>
@@ -403,7 +403,7 @@ public interface PublisherVerificationRules {
    * <p>
    * <b>Verifies rule:</b> <a href='https://github.com/reactive-streams/reactive-streams-jvm#3.3'>3.3</a>
    * <p>
-   * The test is not executed if {@link org.reactivestreams.tck.PublisherVerification#maxElementsFromPublisher()} is less than 
+   * The test is not executed if {@link org.reactivestreams.tck.junit.jupiter.PublisherVerification#maxElementsFromPublisher()} is less than 
    * {@link #required_validate_boundedDepthOfOnNextAndRequestRecursion()} plus 1.
    * <p>
    * If this test fails, the following could be checked within the {@code Publisher} implementation:
@@ -434,7 +434,7 @@ public interface PublisherVerificationRules {
    * <p>
    * <b>Verifies rule:</b> <a href='https://github.com/reactive-streams/reactive-streams-jvm#3.6'>3.6</a>
    * <p>
-   * The test is not executed if {@link org.reactivestreams.tck.PublisherVerification#maxElementsFromPublisher()} is less than 3.
+   * The test is not executed if {@link org.reactivestreams.tck.junit.jupiter.PublisherVerification#maxElementsFromPublisher()} is less than 3.
    * <p>
    * The post-cancellation request pattern is (1, 1, 1).
    * <p>
@@ -452,7 +452,7 @@ public interface PublisherVerificationRules {
    * <p>
    * <b>Verifies rule:</b> <a href='https://github.com/reactive-streams/reactive-streams-jvm#3.7'>3.7</a>
    * <p>
-   * The test is not executed if {@link org.reactivestreams.tck.PublisherVerification#maxElementsFromPublisher()} is less than 1.
+   * The test is not executed if {@link org.reactivestreams.tck.junit.jupiter.PublisherVerification#maxElementsFromPublisher()} is less than 1.
    * <p>
    * If this test fails, the following could be checked within the {@code Publisher} implementation:
    * <ul>
@@ -468,7 +468,7 @@ public interface PublisherVerificationRules {
    * <p>
    * <b>Verifies rule:</b> <a href='https://github.com/reactive-streams/reactive-streams-jvm#3.9'>3.9</a>
    * <p>
-   * The test is not executed if {@link org.reactivestreams.tck.PublisherVerification#maxElementsFromPublisher()} is less than 10.
+   * The test is not executed if {@link org.reactivestreams.tck.junit.jupiter.PublisherVerification#maxElementsFromPublisher()} is less than 10.
    * <p>
    * Note that this test expects the {@code IllegalArgumentException} being signalled through {@code onError}, not by
    * throwing from {@code request()} (which is also forbidden) or signalling the error by any other means (i.e., through the
@@ -493,7 +493,7 @@ public interface PublisherVerificationRules {
    * <p>
    * <b>Verifies rule:</b> <a href='https://github.com/reactive-streams/reactive-streams-jvm#3.9'>3.9</a>
    * <p>
-   * The test is not executed if {@link org.reactivestreams.tck.PublisherVerification#maxElementsFromPublisher()} is less than 10.
+   * The test is not executed if {@link org.reactivestreams.tck.junit.jupiter.PublisherVerification#maxElementsFromPublisher()} is less than 10.
    * <p>
    * Note that this test expects the {@code IllegalArgumentException} being signalled through {@code onError}, not by
    * throwing from {@code request()} (which is also forbidden) or signalling the error by any other means (i.e., through the
@@ -518,7 +518,7 @@ public interface PublisherVerificationRules {
    * <p>
    * <b>Verifies rule:</b> <a href='https://github.com/reactive-streams/reactive-streams-jvm#3.9'>3.9</a>
    * <p>
-   * The test is not executed if {@link org.reactivestreams.tck.PublisherVerification#maxElementsFromPublisher()} is less than 10.
+   * The test is not executed if {@link org.reactivestreams.tck.junit.jupiter.PublisherVerification#maxElementsFromPublisher()} is less than 10.
    * <p>
    * Note that this test expects the {@code IllegalArgumentException} being signalled through {@code onError}, not by
    * throwing from {@code request()} (which is also forbidden) or signalling the error by any other means (i.e., through the
@@ -543,7 +543,7 @@ public interface PublisherVerificationRules {
    * <p>
    * <b>Verifies rule:</b> <a href='https://github.com/reactive-streams/reactive-streams-jvm#3.12'>3.12</a>
    * <p>
-   * The test is not executed if {@link org.reactivestreams.tck.PublisherVerification#maxElementsFromPublisher()} is less than 20.
+   * The test is not executed if {@link org.reactivestreams.tck.junit.jupiter.PublisherVerification#maxElementsFromPublisher()} is less than 20.
    * <p>
    * If this test fails, the following could be checked within the {@code Publisher} implementation:
    * <ul>
@@ -560,7 +560,7 @@ public interface PublisherVerificationRules {
    * <p>
    * <b>Verifies rule:</b> <a href='https://github.com/reactive-streams/reactive-streams-jvm#3.13'>3.13</a>
    * <p>
-   * The test is not executed if {@link org.reactivestreams.tck.PublisherVerification#maxElementsFromPublisher()} is less than 3.
+   * The test is not executed if {@link org.reactivestreams.tck.junit.jupiter.PublisherVerification#maxElementsFromPublisher()} is less than 3.
    * <p>
    * If this test fails, the following could be checked within the {@code Publisher} implementation:
    * <ul>
@@ -583,7 +583,7 @@ public interface PublisherVerificationRules {
    * <p>
    * <b>Verifies rule:</b> <a href='https://github.com/reactive-streams/reactive-streams-jvm#3.17'>3.17</a>
    * <p>
-   * The test is not executed if {@link org.reactivestreams.tck.PublisherVerification#maxElementsFromPublisher()} is less than 3.
+   * The test is not executed if {@link org.reactivestreams.tck.junit.jupiter.PublisherVerification#maxElementsFromPublisher()} is less than 3.
    * <p>
    * If this test fails, the following could be checked within the {@code Publisher} implementation:
    * <ul>
@@ -601,7 +601,7 @@ public interface PublisherVerificationRules {
    * <p>
    * <b>Verifies rule:</b> <a href='https://github.com/reactive-streams/reactive-streams-jvm#3.17'>3.17</a>
    * <p>
-   * The test is not executed if {@link org.reactivestreams.tck.PublisherVerification#maxElementsFromPublisher()} is less than 3.
+   * The test is not executed if {@link org.reactivestreams.tck.junit.jupiter.PublisherVerification#maxElementsFromPublisher()} is less than 3.
    * <p>
    * If this test fails, the following could be checked within the {@code Publisher} implementation:
    * <ul>
@@ -621,7 +621,7 @@ public interface PublisherVerificationRules {
    * <p>
    * <b>Verifies rule:</b> <a href='https://github.com/reactive-streams/reactive-streams-jvm#3.17'>3.17</a>
    * <p>
-   * The test is not executed if {@link org.reactivestreams.tck.PublisherVerification#maxElementsFromPublisher()} is less than {@code Integer.MAX_VALUE}.
+   * The test is not executed if {@link org.reactivestreams.tck.junit.jupiter.PublisherVerification#maxElementsFromPublisher()} is less than {@code Integer.MAX_VALUE}.
    * <p>
    * The request pattern is one {@code request(1)} upfront and ten {@code request(Long.MAX_VALUE - 1)} after.
    * <p>
