@@ -30,8 +30,8 @@
   </licenses>
 
   <modules>
-    <module>tck-junit-jupiter</module>
-    <module>tck-flow-junit-jupiter</module>
+    <module>reactive-streams-tck-junit-jupiter</module>
+    <module>reactive-streams-tck-flow-junit-jupiter</module>
   </modules>
 
   <scm>
@@ -97,12 +97,12 @@
       <!-- Sibling modules -->
       <dependency>
         <groupId>${project.groupId}</groupId>
-        <artifactId>tck-junit-jupiter</artifactId>
+        <artifactId>reactive-streams-tck-junit-jupiter</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
         <groupId>${project.groupId}</groupId>
-        <artifactId>tck-flow-junit-jupiter</artifactId>
+        <artifactId>reactive-streams-tck-flow-junit-jupiter</artifactId>
         <version>${project.version}</version>
       </dependency>
     </dependencies>
@@ -148,6 +148,11 @@
               </configuration>
             </execution>
           </executions>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-project-info-reports-plugin</artifactId>
+          <version>3.9.0</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>

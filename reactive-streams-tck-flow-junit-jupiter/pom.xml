@@ -8,7 +8,7 @@
     <version>0.0.4-SNAPSHOT</version>
   </parent>
 
-  <artifactId>tck-flow-junit-jupiter</artifactId>
+  <artifactId>reactive-streams-tck-flow-junit-jupiter</artifactId>
   <packaging>jar</packaging>
 
   <name>${project.artifactId}</name>
@@ -18,7 +18,7 @@
     <!-- Sibling: the Jupiter TCK base classes for Reactive Streams Publisher/Subscriber/Processor -->
     <dependency>
       <groupId>${project.groupId}</groupId>
-      <artifactId>tck-junit-jupiter</artifactId>
+      <artifactId>reactive-streams-tck-junit-jupiter</artifactId>
     </dependency>
 
     <!--
