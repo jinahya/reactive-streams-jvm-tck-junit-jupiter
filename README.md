@@ -2,6 +2,11 @@
 
 [![Java CI with Maven](https://github.com/jinahya/reactive-streams-jvm-tck-junit-jupiter/actions/workflows/maven.yml/badge.svg)](https://github.com/jinahya/reactive-streams-jvm-tck-junit-jupiter/actions/workflows/maven.yml)
 
+[![Maven Central Version](https://img.shields.io/maven-central/v/io.github.jinahya/reactive-streams-jvm-tck-junit-jupiter)](https://central.sonatype.com/artifact/io.github.jinahya/reactive-streams-jvm-tck-junit-jupiter)
+[![reactive-streams-tck-junit-jupiter](https://img.shields.io/maven-central/v/io.github.jinahya/reactive-streams-tck-junit-jupiter?label=reactive-streams-tck-junit-jupiter)](https://central.sonatype.com/artifact/io.github.jinahya/reactive-streams-tck-junit-jupiter)
+[![reactive-streams-tck-flow-junit-jupiter](https://img.shields.io/maven-central/v/io.github.jinahya/reactive-streams-tck-flow-junit-jupiter?label=reactive-streams-tck-flow-junit-jupiter)](https://central.sonatype.com/artifact/io.github.jinahya/reactive-streams-tck-flow-junit-jupiter)
+
+
 A JUnit Jupiter port of the [Reactive Streams JVM TCK](https://github.com/reactive-streams/reactive-streams-jvm/tree/master/tck).
 
 The upstream TCK is TestNG-based. This project provides equivalent abstract `*Verification` base classes annotated for JUnit Jupiter, so projects on a Jupiter-only test stack can verify their `Publisher` / `Subscriber` / `Processor` implementations against the Reactive Streams spec without dragging TestNG into the build.
