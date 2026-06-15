@@ -28,4 +28,8 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Build with Maven
+      env:
+        # Bump TestEnvironment's default expect/poll timeout for slower CI runners.
+        # SubmissionPublisher-backed tests flake at the upstream default of 100ms.
+        DEFAULT_TIMEOUT_MILLIS: '300'
       run: mvn -B package --file pom.xml
